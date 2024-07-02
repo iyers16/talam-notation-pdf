@@ -35,44 +35,72 @@ const FormComponent = () => {
     setFormData({ ...formData, avarthanams: [...formData.avarthanams, ''] });
   };
 
+  const removeAvarthanam = (index) => {
+    const newAvarthanams = formData.avarthanams.filter((_, i) => i !== index);
+    setFormData({ ...formData, avarthanams: newAvarthanams });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate('/pdf-view', { state: { formData, maatraCount } });
   };
 
+  const handleReset = () => {
+    setFormData({
+      title: '',
+      thalam: '',
+      nadai: '',
+      avarthanams: [''],
+    });
+    setMaatraCount(0);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Title:</label>
-        <input type="text" name="title" value={formData.title} onChange={handleChange} required />
-      </div>
-      <div>
-        <label>Thalam:</label>
-        <input type="number" name="thalam" value={formData.thalam} onChange={handleChange} required />
-      </div>
-      <div>
-        <label>Nadai:</label>
-        <input type="number" name="nadai" value={formData.nadai} onChange={handleChange} required />
-      </div>
-      {maatraCount > 0 && formData.thalam && formData.nadai && (
-        <>
-          {formData.avarthanams.map((avarthanam, index) => (
-            <div key={index}>
-              <label>Avarthanam {index + 1}:</label>
-              <input
-                type="text"
-                value={avarthanam}
-                onChange={(e) => handleAvarthanamChange(index, e.target.value)}
-                maxLength={maatraCount}
-                required
-              />
-            </div>
-          ))}
-          <button type="button" onClick={addAvarthanam}>Add Avarthanam</button>
-        </>
-      )}
-      <button type="submit">Submit</button>
-    </form>
+    <div className="container">
+      <h1>Form</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Title:</label>
+          <input type="text" name="title" value={formData.title} onChange={handleChange} required />
+        </div>
+        <div>
+          <label>Thalam:</label>
+          <input type="number" name="thalam" value={formData.thalam} onChange={handleChange} required />
+        </div>
+        <div>
+          <label>Nadai:</label>
+          <input type="number" name="nadai" value={formData.nadai} onChange={handleChange} required />
+        </div>
+        {maatraCount > 0 && formData.thalam && formData.nadai && (
+          <>
+            {formData.avarthanams.map((avarthanam, index) => (
+              <div className="avarthanam-container" key={index}>
+                <div style={{ flexGrow: 1 }}>
+                  <label>Avarthanam {index + 1}:</label>
+                  <input
+                    type="text"
+                    value={avarthanam}
+                    onChange={(e) => handleAvarthanamChange(index, e.target.value)}
+                    maxLength={maatraCount}
+                    required
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="remove-button"
+                  onClick={() => removeAvarthanam(index)}
+                >
+                  🗑️
+                </button>
+              </div>
+            ))}
+            <button type="button" onClick={addAvarthanam}>Add Avarthanam</button>
+          </>
+        )}
+        <button type="submit">Submit</button>
+        <button type="button" onClick={handleReset} style={{ marginTop: '10px' }}>Reset</button>
+      </form>
+    </div>
   );
 };
 
