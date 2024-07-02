@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/talam-notation-pdf/static/js/main.0813d933.js",
+    "main.js": "/talam-notation-pdf/static/js/main.7cff07cd.js",
     "index.html": "/talam-notation-pdf/index.html",
-    "main.0813d933.js.map": "/talam-notation-pdf/static/js/main.0813d933.js.map"
+    "main.7cff07cd.js.map": "/talam-notation-pdf/static/js/main.7cff07cd.js.map"
   },
   "entrypoints": [
-    "static/js/main.0813d933.js"
+    "static/js/main.7cff07cd.js"
   ]
 }
