@@ -1,20 +1,28 @@
 // components/PdfViewComponent.jsx
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
 
-const PdfDocument = ({ formData }) => (
+const PdfDocument = ({ formData, maatraCount }) => (
   <Document>
     <Page style={styles.body}>
       <View style={styles.section}>
-        <Text>Name: {formData.name}</Text>
+        <Text>Title: {formData.title}</Text>
       </View>
       <View style={styles.section}>
-        <Text>Age: {formData.age}</Text>
+        <Text>Thalam: {formData.thalam}</Text>
       </View>
       <View style={styles.section}>
-        <Text>Occupation: {formData.occupation}</Text>
+        <Text>Nadai: {formData.nadai}</Text>
       </View>
+      <View style={styles.section}>
+        <Text>Maatras: {maatraCount}</Text>
+      </View>
+      {formData.avarthanams.map((avarthanam, index) => (
+        <View key={index} style={styles.section}>
+          <Text>Avarthanam {index + 1}: {avarthanam}</Text>
+        </View>
+      ))}
     </Page>
   </Document>
 );
@@ -32,15 +40,15 @@ const styles = StyleSheet.create({
 
 const PdfViewComponent = () => {
   const location = useLocation();
-  const { formData } = location.state;
+  const { formData, maatraCount } = location.state;
 
   return (
     <div>
       <h1>PDF Preview</h1>
-      <PDFDownloadLink document={<PdfDocument formData={formData} />} fileName="form_data.pdf">
+      <PDFDownloadLink document={<PdfDocument formData={formData} maatraCount={maatraCount} />} fileName="form_data.pdf">
         {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')}
       </PDFDownloadLink>
-      <PdfDocument formData={formData} />
+      <PdfDocument formData={formData} maatraCount={maatraCount} />
     </div>
   );
 };

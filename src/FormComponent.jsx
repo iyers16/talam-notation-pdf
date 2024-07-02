@@ -3,33 +3,74 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const FormComponent = () => {
-  const [formData, setFormData] = useState({ name: '', age: '', occupation: '' });
+  const [formData, setFormData] = useState({
+    title: '',
+    thalam: '',
+    nadai: '',
+    avarthanams: [''],
+  });
+  const [maatraCount, setMaatraCount] = useState(0);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    if (name === 'thalam' || name === 'nadai') {
+      const thalamValue = name === 'thalam' ? parseInt(value, 10) : parseInt(formData.thalam, 10);
+      const nadaiValue = name === 'nadai' ? parseInt(value, 10) : parseInt(formData.nadai, 10);
+      if (!isNaN(thalamValue) && !isNaN(nadaiValue)) {
+        setMaatraCount(thalamValue * nadaiValue);
+      }
+    }
+  };
+
+  const handleAvarthanamChange = (index, value) => {
+    const newAvarthanams = [...formData.avarthanams];
+    newAvarthanams[index] = value;
+    setFormData({ ...formData, avarthanams: newAvarthanams });
+  };
+
+  const addAvarthanam = () => {
+    setFormData({ ...formData, avarthanams: [...formData.avarthanams, ''] });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/pdf-view', { state: { formData } });
+    navigate('/pdf-view', { state: { formData, maatraCount } });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Name:</label>
-        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+        <label>Title:</label>
+        <input type="text" name="title" value={formData.title} onChange={handleChange} required />
       </div>
       <div>
-        <label>Age:</label>
-        <input type="number" name="age" value={formData.age} onChange={handleChange} required />
+        <label>Thalam:</label>
+        <input type="number" name="thalam" value={formData.thalam} onChange={handleChange} required />
       </div>
       <div>
-        <label>Occupation:</label>
-        <input type="text" name="occupation" value={formData.occupation} onChange={handleChange} required />
+        <label>Nadai:</label>
+        <input type="number" name="nadai" value={formData.nadai} onChange={handleChange} required />
       </div>
+      {maatraCount > 0 && formData.thalam && formData.nadai && (
+        <>
+          {formData.avarthanams.map((avarthanam, index) => (
+            <div key={index}>
+              <label>Avarthanam {index + 1}:</label>
+              <input
+                type="text"
+                value={avarthanam}
+                onChange={(e) => handleAvarthanamChange(index, e.target.value)}
+                maxLength={maatraCount}
+                required
+              />
+            </div>
+          ))}
+          <button type="button" onClick={addAvarthanam}>Add Avarthanam</button>
+        </>
+      )}
       <button type="submit">Submit</button>
     </form>
   );
