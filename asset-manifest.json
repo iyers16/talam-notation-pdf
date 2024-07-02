@@ -1,10 +1,13 @@
 {
   "files": {
-    "main.js": "/talam-notation-pdf/static/js/main.7cff07cd.js",
+    "main.css": "/talam-notation-pdf/static/css/main.f388ad31.css",
+    "main.js": "/talam-notation-pdf/static/js/main.36cc90fe.js",
     "index.html": "/talam-notation-pdf/index.html",
-    "main.7cff07cd.js.map": "/talam-notation-pdf/static/js/main.7cff07cd.js.map"
+    "main.f388ad31.css.map": "/talam-notation-pdf/static/css/main.f388ad31.css.map",
+    "main.36cc90fe.js.map": "/talam-notation-pdf/static/js/main.36cc90fe.js.map"
   },
   "entrypoints": [
-    "static/js/main.7cff07cd.js"
+    "static/css/main.f388ad31.css",
+    "static/js/main.36cc90fe.js"
   ]
 }
