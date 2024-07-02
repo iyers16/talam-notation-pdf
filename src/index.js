@@ -6,7 +6,7 @@ import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/talam-notation-pdf">
       <App />
     </BrowserRouter>
   </React.StrictMode>,
